@@ -18,11 +18,12 @@ const getNotifications = async (req = request, res = response) => {
             Notification.find({ user: user._id })
         ])
 
-        let filteredSales = sortArray(sales, orderBy, filterBy);
+        // let filteredSales = sortArray(sales, orderBy, filterBy);
 
         res.json({
             msg: 'OK',
-            sales: filteredSales,
+            // sales: filteredSales,
+            sales,
             notifications
         })
 
