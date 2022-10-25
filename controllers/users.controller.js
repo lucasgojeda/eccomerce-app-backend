@@ -268,7 +268,7 @@ const updateCartUser = async (req, res = response) => {
 
             User.findById(id),
 
-            Product.findById(cart.id).populate('category', 'name')
+            Product.findById(cart._id).populate('category', 'name')
         ]);
 
 
@@ -280,7 +280,7 @@ const updateCartUser = async (req, res = response) => {
 
         if (!product) {
             return res.status(400).json({
-                msg: `The product with the id ${cart.id} don't exist!`
+                msg: `The product with the id ${cart._id} don't exist!`
             });
         }
 
@@ -288,17 +288,17 @@ const updateCartUser = async (req, res = response) => {
 
             let userDB = await User.findById(id);
 
-            if (userDB.cart.includes(cart.id)) {
+            if (userDB.cart.includes(cart._id)) {
                 throw new Error(`The product ${product.name}, is already in the cart.`);
             }
 
-            userDB.cart = userDB.cart.push(cart.id);
+            userDB.cart = userDB.cart.push(cart._id);
 
             await User.findByIdAndUpdate(id, userDB);
 
         } else {
 
-            await User.findByIdAndUpdate(id, { cart: cart.id });
+            await User.findByIdAndUpdate(id, { cart: cart._id });
         }
 
 
@@ -319,43 +319,45 @@ const updateCartUser = async (req, res = response) => {
 
 const deleteCartUser = async (req, res = response) => {
 
-    const id = req.params.id;
-    const cart = req.body;
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+    // const cart = req.body;
 
+    // console.log(cart);
 
     try {
 
 
         const [user, product] = await Promise.all([
 
-            User.findById(id),
+            User.findById(userId),
 
-            Product.findById(cart.id).populate('category', 'name')
+            Product.findById(productId).populate('category', 'name')
         ]);
 
 
         if (!user) {
             return res.status(400).json({
-                msg: `The user with the id ${_id} don't exist!`
+                msg: `The user with the id ${userId} don't exist!`
             });
         }
 
         if (!product) {
             return res.status(400).json({
-                msg: `The product with the id ${cart.id} don't exist!`
+                msg: `The product with the id ${productId} don't exist!`
             });
         }
 
 
-        let userDB = await User.findById(id);
+        // let userDB = await User.findById(id);
 
-        if (!userDB.cart.includes(cart.id)) {
+        if (!user.cart.includes(productId)) {
             throw new Error(`The product ${product.name}, is not in the cart.`);
         }
 
-        userDB.cart = userDB.cart.filter(e => e.toString() !== cart.id);
+        user.cart = user.cart.filter(e => e.toString() !== productId);
 
-        await User.findByIdAndUpdate(id, userDB);
+        await User.findByIdAndUpdate(userId, user);
 
         res.json({
             msg: 'OK',

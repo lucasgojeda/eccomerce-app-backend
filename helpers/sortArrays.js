@@ -64,7 +64,8 @@ const sortArray = (array, orderBy, filterBy) => {
 
     }
 
-    return filteredProducts;
+
+    return filteredProducts.filter((e) => (e.category.name) !== 'Preba' && e);
 }
 
 module.exports = {

@@ -18,10 +18,14 @@ const categorySchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    products: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Product'
+    }],
 });
 
-categorySchema.methods.toJSON = function() {
+categorySchema.methods.toJSON = function () {
     const { __v, status, ...category } = this.toObject();
     return category;
 }

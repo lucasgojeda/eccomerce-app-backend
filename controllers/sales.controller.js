@@ -3,6 +3,7 @@ const { ObjectId } = require('mongoose').Types;
 
 const { Sale, User, Notification } = require('../models');
 const { sortArray } = require('../helpers/sortArrays');
+const { updateBestProducts } = require('./ranking.controller');
 
 
 const getSales = async(req = request, res = response) => {
@@ -107,34 +108,37 @@ const createSale = async (req = request, res = response) => {
             });
         }
 
-        let totalPrice = 0;
+        // Enviamos los productos del carrito a ser puestos en el ranking
+        updateBestProducts(userDB.cart);
 
-        userDB.cart.forEach(e => {
-            totalPrice = totalPrice + parseFloat(e.price)
-        });
+        // let totalPrice = 0;
 
-        const sale = new Sale({
-            user: user._id,
-            cart: userDB.cart,
-            date_requested: new Date(),
-            total_price: totalPrice,
-            status: 'A punto de ser enviado!'
-        });
+        // userDB.cart.forEach(e => {
+        //     totalPrice = totalPrice + parseFloat(e.price)
+        // });
 
-        const newSale = await sale.save();
+        // const sale = new Sale({
+        //     user: user._id,
+        //     cart: userDB.cart,
+        //     date_requested: new Date(),
+        //     total_price: totalPrice,
+        //     status: 'A punto de ser enviado!'
+        // });
 
-        const saleDB = await Sale.findById(newSale._id)
-            .populate('user')
-            .populate('cart');
+        // const newSale = await sale.save();
 
-        userDB.cart = [];
+        // const saleDB = await Sale.findById(newSale._id)
+        //     .populate('user')
+        //     .populate('cart');
 
-        const saleNewFinish = await User.findByIdAndUpdate(user._id, userDB, { new: true });
+        // userDB.cart = [];
+
+        // const saleNewFinish = await User.findByIdAndUpdate(user._id, userDB, { new: true });
 
         res.json({
             msg: 'OK',
-            sale: saleDB,
-            user: saleNewFinish
+            // sale: saleDB,
+            // user: saleNewFinish
         })
 
     } catch (error) {

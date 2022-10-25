@@ -29,6 +29,7 @@ class Server {
             sales: '/api/sales',
             notifications: '/api/notifications',
             dashboard: '/api/dashboard',
+            ranking: '/api/ranking',
         }
 
         this.conectarDB();
@@ -70,6 +71,7 @@ class Server {
         this.app.use(this.paths.sales, require('../routes/sales.routes'));
         this.app.use(this.paths.notifications, require('../routes/notifications.routes'));
         this.app.use(this.paths.dashboard, require('../routes/dashboard.routes'));
+        this.app.use(this.paths.ranking, require('../routes/ranking.routes'));
         
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(publicPath, 'index.html')), function (err) {

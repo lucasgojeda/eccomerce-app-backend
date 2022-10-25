@@ -60,9 +60,10 @@ router.put('/cart/:id', [
     validateFields
 ], updateCartUser);
 
-router.delete('/cart/:id', [
+router.delete('/cart/:userId/:productId', [
     jwtValidate,
-    check('id', 'It is not a valid mongo id.').isMongoId(),
+    check('userId', 'It is not a valid mongo id.').isMongoId(),
+    check('productId', 'It is not a valid mongo id.').isMongoId(),
     validateFields
 ], deleteCartUser);
 

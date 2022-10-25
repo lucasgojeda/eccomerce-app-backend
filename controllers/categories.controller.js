@@ -15,6 +15,7 @@ const getListCategories = async (req, res = response) => {
 
             Category.find(query)
                 .populate('user', 'name')
+                .populate('products')
                 .skip(Number(since))
                 .limit(Number(limit))
         ]);

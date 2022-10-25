@@ -2,7 +2,10 @@ const { Router } = require('express');
 
 const { check } = require('express-validator');
 
-const { createProduct,
+const { 
+    getProductsByCategories,
+    getProductsSearchEcommerce,
+    createProduct,
     getListProducts,
     getProductById,
     updateProduct,
@@ -18,6 +21,13 @@ const { validateFields } = require('../middlewares/validate-fields.mw');
 
 const router = Router();
 
+/** Only ecommerce */
+
+router.get('/productsByCategories', getProductsByCategories)
+
+router.get('/productsSearchEcommerce/:term', getProductsSearchEcommerce)
+
+/** Ecommerce and dashboard */
 
 router.get('/:term', getListProducts)
 
