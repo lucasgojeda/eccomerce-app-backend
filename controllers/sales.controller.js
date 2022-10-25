@@ -109,31 +109,31 @@ const createSale = async (req = request, res = response) => {
         }
 
         // Enviamos los productos del carrito a ser puestos en el ranking
-        updateBestProducts(userDB.cart);
+        userDB.cart.forEach((e) => updateBestProducts(e));
 
-        // let totalPrice = 0;
+        let totalPrice = 0;
 
-        // userDB.cart.forEach(e => {
-        //     totalPrice = totalPrice + parseFloat(e.price)
-        // });
+        userDB.cart.forEach(e => {
+            totalPrice = totalPrice + parseFloat(e.price)
+        });
 
-        // const sale = new Sale({
-        //     user: user._id,
-        //     cart: userDB.cart,
-        //     date_requested: new Date(),
-        //     total_price: totalPrice,
-        //     status: 'A punto de ser enviado!'
-        // });
+        const sale = new Sale({
+            user: user._id,
+            cart: userDB.cart,
+            date_requested: new Date(),
+            total_price: totalPrice,
+            status: 'A punto de ser enviado!'
+        });
 
-        // const newSale = await sale.save();
+        const newSale = await sale.save();
 
-        // const saleDB = await Sale.findById(newSale._id)
-        //     .populate('user')
-        //     .populate('cart');
+        const saleDB = await Sale.findById(newSale._id)
+            .populate('user')
+            .populate('cart');
 
-        // userDB.cart = [];
+        userDB.cart = [];
 
-        // const saleNewFinish = await User.findByIdAndUpdate(user._id, userDB, { new: true });
+        const saleNewFinish = await User.findByIdAndUpdate(user._id, userDB, { new: true });
 
         res.json({
             msg: 'OK',

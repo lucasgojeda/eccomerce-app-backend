@@ -26,49 +26,45 @@ const getBestProducts = async (req = request, res = response) => {
   }
 };
 
-const updateBestProducts = async (cart) => {
+const updateBestProducts = async (productCart) => {
   try {
+    /** Traemos los productos del ranking para ser comparados */
     const bestProducts = await ranking.find();
 
-    // let data = [];
+    /**
+     * En esta variable vamos a cololar el producto recibido de encontrarse
+     * luego del filtrado de los productos del ranking.
+     */
+    let bestProductDB = [];
 
-    let newData = [
-      {
-        _id: "622a3df460c0c15e8e44bf5d",
-        ranking: 1
-      }
-    ];
+    /**
+     * Filtramos los productos del ranking para ver cuales están ya colocados y asi
+     * no repetirlos.
+     */
+    bestProductDB = bestProducts.filter(
+      (e) => e.product.toString() === productCart._id.toString()
+    );
 
-    console.log('Cart: ', cart);
+    /**
+     * Si el producto no está en el ranking entonces lo creamos.
+     */
+    if (bestProductDB.length === 0) {
+      const newProduct = new ranking({
+        product: productCart._id,
+        ranking: 1,
+      });
 
-    console.log('Before: ', data);
-
-    // newData.push({
-    //   _id: e._id,
-    //   ranking: 1
-    // })
-
-    cart.forEach((c) => {
-
-      const product = newData.find((d) => d._id === c._id.toString());
-
-      if(product) {
-
-        data = [ ...data, {
-          _id: product._id,
-          ranking: product.ranking + 1
-        }]
-      } else {
-
-        data = [ ...data, {
-          _id: c._id,
-          ranking: 1
-        }]
-      }
-    })
-
-    console.log('After: ', data);
-    
+      await newProduct.save();
+    } else {
+      /**
+       * Si el producto ya se encuentra en el ranking entonces le sumamos
+       * un punto de ranking.
+       */
+      await ranking.findByIdAndUpdate(bestProductDB[0]._id, {
+        product: bestProductDB[0].product,
+        ranking: bestProductDB[0].ranking + 1,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
