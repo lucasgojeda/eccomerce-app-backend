@@ -12,11 +12,21 @@ const { recordCreate } = require("./record.controller");
 
 const getBestProducts = async (req = request, res = response) => {
   try {
-    const data = await ranking.find().populate("product");
+    // const data = await ranking.find().populate("product");
 
-    let results = sortArray(data, "desc", "ranking");
+    const data = await ranking.find().populate({
+      path: "product",
+      populate: {
+        path: "category",
+        select: 'name'
+      },
+    });
 
-    results = results.filter((e, i) => i < 5);
+    let filterData = sortArray(data, "desc", "ranking");
+
+    let results = [];
+
+    filterData.forEach((e, i) => i < 5 && (results = [...results, e.product]));
 
     res.json({
       msg: "OK",
