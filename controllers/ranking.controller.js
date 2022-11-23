@@ -14,9 +14,13 @@ const getBestProducts = async (req = request, res = response) => {
   try {
     const data = await ranking.find().populate("product");
 
+    let results = sortArray(data, "desc", "ranking");
+
+    results = results.filter((e, i) => i < 5);
+
     res.json({
-      msg: "OK, bestProducts",
-      results: data,
+      msg: "OK",
+      results,
     });
   } catch (error) {
     res.json({
