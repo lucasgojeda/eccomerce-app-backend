@@ -18,7 +18,7 @@ const loginController = async (req, res = response) => {
         populate: {
           path: "name",
         },
-      },
+      }, 
     });
 
     if (!user) {
