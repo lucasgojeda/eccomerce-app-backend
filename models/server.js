@@ -72,7 +72,7 @@ class Server {
         this.app.use(this.paths.notifications, require('../routes/notifications.routes'));
         this.app.use(this.paths.dashboard, require('../routes/dashboard.routes'));
         this.app.use(this.paths.ranking, require('../routes/ranking.routes'));
-        
+
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(publicPath, 'index.html')), function (err) {
                 if (err) {
