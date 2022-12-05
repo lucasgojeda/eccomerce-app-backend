@@ -11,7 +11,7 @@ const {
 
 const router = Router();
 
-router.get('/', [
+router.get('/:page', [
     jwtValidate,
     validateFields
 ], getNotifications);
