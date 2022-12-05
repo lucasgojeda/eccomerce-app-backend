@@ -39,6 +39,13 @@ const getProductsSearchEcommerce = async (req = request, res = response) => {
           .populate("category", "name")
           .populate("user", "name");
 
+          if(!products || products.length === 0 || products === undefined) {
+            return res.json({
+              msg: "OK",
+              results: [],
+            });
+          }
+
         // we filter and order results
         let filteredProducts = sortArray(products, orderBy, filterBy);
 
@@ -58,6 +65,13 @@ const getProductsSearchEcommerce = async (req = request, res = response) => {
         //     order: orderBy
         // })
 
+        if(!products || products.length === 0 || products === undefined) {
+          return res.json({
+            msg: "OK",
+            results: [],
+          });
+        }
+
         let filteredProducts = sortArray(products, orderBy, filterBy);
 
         return res.json({
@@ -76,6 +90,13 @@ const getProductsSearchEcommerce = async (req = request, res = response) => {
       //     by: filterBy,
       //     order: orderBy
       // })
+
+      if(!products || products.length === 0 || products === undefined) {
+        return res.json({
+          msg: "OK",
+          results: [],
+        });
+      }
 
       let filteredProducts = sortArray(products, orderBy, filterBy);
 
@@ -146,6 +167,13 @@ const getListProducts = async (req = request, res = response) => {
           .populate("category", "name")
           .populate("user", "name");
 
+        if(!products || products.length === 0 || products === undefined) {
+          return res.json({
+            msg: "OK",
+            results: [],
+          });
+        }
+
         // we filter and order results
         let filteredProducts = sortArray(products, orderBy, filterBy);
 
@@ -171,6 +199,13 @@ const getListProducts = async (req = request, res = response) => {
         //     order: orderBy
         // })
 
+        if(!products || products.length === 0 || products === undefined) {
+          return res.json({
+            msg: "OK",
+            results: [],
+          });
+        }
+
         let filteredProducts = sortArray(products, orderBy, filterBy);
 
         // we paginate results
@@ -195,6 +230,13 @@ const getListProducts = async (req = request, res = response) => {
       //     by: filterBy,
       //     order: orderBy
       // })
+
+      if(!products || products.length === 0 || products === undefined) {
+          return res.json({
+            msg: "OK",
+            results: [],
+          });
+        }
 
       let filteredProducts = sortArray(products, orderBy, filterBy);
 
