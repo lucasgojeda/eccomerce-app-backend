@@ -24,9 +24,15 @@ const getNotifications = async (req = request, res = response) => {
 
         let filteredSales = sortArray(sales, 'desc', 'date_sended');
 
-        let filteredNotifications = []
+        let orderedNotifications = [];
 
-        notifications.forEach((e, i) => (i > (desde -1) && i < limite) && (filteredNotifications = [...filteredNotifications, e]))
+        filteredSales.forEach((e) => {
+            notifications.forEach((n) => (e._id.toString() === n.sale.toString()) && (orderedNotifications = [...orderedNotifications, n]))
+        })
+
+        let filteredNotifications = [];
+
+        orderedNotifications.forEach((e, i) => (i >= desde && i < limite) && (filteredNotifications = [...filteredNotifications, e]))
 
         res.json({
             msg: 'OK',
