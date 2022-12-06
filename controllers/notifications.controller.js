@@ -22,6 +22,22 @@ const getNotifications = async (req = request, res = response) => {
             Notification.find({ user: user._id })
         ])
 
+        if (!notifications || notifications.length === 0 || notifications === undefined) {
+            return res.json({
+                msg: "OK",
+                sales: [],
+                notifications: []
+            });
+        }
+
+        if (!sales || sales.length === 0 || sales === undefined) {
+            return res.json({
+                msg: "OK",
+                sales: [],
+                notifications: []
+            });
+        }
+
         let filteredSales = sortArray(sales, 'desc', 'date_sended');
 
         let orderedNotifications = [];
