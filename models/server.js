@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 const fileUpload = require('express-fileupload');
 require('colors');
 
@@ -30,6 +32,7 @@ class Server {
             notifications: '/api/notifications',
             dashboard: '/api/dashboard',
             ranking: '/api/ranking',
+            payment: '/api/payment',
         }
 
         this.conectarDB();
@@ -45,6 +48,9 @@ class Server {
 
     middlewares() {
         this.app.use(cors());
+
+        this.app.use(logger("dev"));
+        this.app.use(cookieParser());
 
         //Reading and parsing of the body.
         this.app.use(bodyParser.json({ limit: '50mb' }));
@@ -72,6 +78,7 @@ class Server {
         this.app.use(this.paths.notifications, require('../routes/notifications.routes'));
         this.app.use(this.paths.dashboard, require('../routes/dashboard.routes'));
         this.app.use(this.paths.ranking, require('../routes/ranking.routes'));
+        this.app.use(this.paths.payment, require('../routes/payments.routes'));
 
         this.app.get('*', (req, res) => {
             res.sendFile(path.join(publicPath, 'index.html')), function (err) {
