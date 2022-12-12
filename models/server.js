@@ -50,7 +50,7 @@ class Server {
         this.app.use(cors());
 
         this.app.use(logger("dev"));
-        // this.app.use(cookieParser());
+        this.app.use(cookieParser());
 
         //Reading and parsing of the body.
         this.app.use(bodyParser.json({ limit: '50mb' }));
