@@ -205,9 +205,68 @@ const updateSale = async (req, res = response) => {
 
 };
 
+const clearSale = async (req = request, res = response) => {
+
+    console.log('clearSale passed!')
+
+    const email = req.params.email;
+
+    try {
+        let userDB = await User.findOne({ email: email }).populate('cart');
+
+        if (!userDB) {
+            return res.status(400).json({
+                msg: `The user with the email ${email} don't exist`
+            });
+        }
+
+        // Enviamos los productos del carrito a ser puestos en el ranking
+        userDB.cart.forEach((e) => updateBestProducts(e));
+
+        let totalPrice = 0;
+
+        userDB.cart.forEach(e => {
+            totalPrice = totalPrice + parseFloat(e.price)
+        });
+
+        const sale = new Sale({
+            user: userDB._id,
+            cart: userDB.cart,
+            date_requested: new Date(),
+            total_price: totalPrice,
+            status: 'A punto de ser enviado!'
+        });
+
+        const newSale = await sale.save();
+
+        const saleDB = await Sale.findById(newSale._id)
+            .populate('user')
+            .populate('cart');
+
+        userDB.cart = [];
+
+        const saleNewFinish = await User.findByIdAndUpdate(userDB._id, userDB, { new: true });
+
+        res.json({
+            msg: 'OK',
+            // sale: saleDB,
+            // user: saleNewFinish
+        })
+
+    } catch (error) {
+        res.json({
+            msg: error
+        })
+        console.log(error)
+    }
+
+
+};
+
 
 module.exports = {
     getSales,
     createSale,
     updateSale,
+    clearSale
 }
