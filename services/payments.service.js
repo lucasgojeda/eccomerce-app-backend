@@ -2,7 +2,16 @@ const mercadoPagoApi = require('../api/mercadoPagoApi');
 
 class PaymentsService {
 
-    async createPayment({ products, user_email }) {
+    async createPayment(data) {
+
+        const {
+            products,
+            user_email,
+            success,
+            failure,
+            pending,
+            notification_baseUrl
+        } = data;
 
         try {
 
@@ -13,7 +22,7 @@ class PaymentsService {
                 description: e.description,
                 picture_url: e.img[0].imageUrl,
                 category_id: e.category._id,
-                quantity: 1,
+                quantity: e.quantity,
                 unit_price: 10
                 // unit_price: e.price
             }])
@@ -22,11 +31,12 @@ class PaymentsService {
                 payer_email: user_email,
                 items,
                 back_urls: {
-                  success: "https://my-ecommerce-app-vite.netlify.app/cart",
-                  failure: "https://my-ecommerce-app-vite.netlify.app/",    
-                  pending: "https://my-ecommerce-app-vite.netlify.app/"
-                }
-              });
+                    success,
+                    failure,
+                    pending,
+                },
+                notification_url: `https://eccomerce-app-backend.onrender.com/api/sales/clear/${user_email}`,
+            });
 
             return data;
         } catch (error) {

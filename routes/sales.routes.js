@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 
 const { getSales, 
         createSale,
+        clearSale,
         updateSale  } = require('../controllers/sales.controller');
 
 const {
@@ -21,6 +22,10 @@ router.get('/:term', [
     isRole('ADMIN_ROLE', 'MODERATOR_ROLE'),
     validateFields
 ], getSales);
+
+router.get('/clear/:email', [
+    validateFields
+], clearSale);
 
 router.post('/', [
     validateFields
