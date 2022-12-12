@@ -23,7 +23,7 @@ router.get('/:term', [
     validateFields
 ], getSales);
 
-router.get('/clear/:email', [
+router.post('/clear/:email/', [
     validateFields
 ], clearSale);
 
