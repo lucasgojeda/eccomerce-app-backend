@@ -35,7 +35,7 @@ class PaymentsService {
                     failure,
                     pending,
                 },
-                notification_url: `https://eccomerce-app-backend.onrender.com/api/sales/clear/${user_email}`,
+                notification_url: `https://eccomerce-app-backend.onrender.com/api/sales/clear/${user_email}/asd`,
             });
 
             return data;
