@@ -6,7 +6,7 @@ const { sortArray } = require('../helpers/sortArrays');
 const { updateBestProducts } = require('./ranking.controller');
 
 
-const getSales = async(req = request, res = response) => {
+const getSales = async (req = request, res = response) => {
 
     try {
         const { term } = req.params;
@@ -207,7 +207,6 @@ const updateSale = async (req, res = response) => {
 
 const clearSale = async (req = request, res = response) => {
 
-    console.log('clearSale passed!')
 
     const email = req.params.email;
 
@@ -219,6 +218,14 @@ const clearSale = async (req = request, res = response) => {
                 msg: `The user with the email ${email} don't exist`
             });
         }
+
+        if (userDB.cart.length === 0) {
+            return res.status(400).json({
+                msg: `The cart is empty`
+            });
+        }
+
+        console.log('User cart has been cleaned!')
 
         // Enviamos los productos del carrito a ser puestos en el ranking
         userDB.cart.forEach((e) => updateBestProducts(e));
