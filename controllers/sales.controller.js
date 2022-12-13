@@ -220,7 +220,7 @@ const clearSale = async (req = request, res = response) => {
             });
         }
 
-        if (userDB.cart.length === 0) return;
+        if (req.body.action !== 'payment.created') return;
 
         console.log('User cart has been cleaned!', email)
         console.log(userDB.cart.length)
