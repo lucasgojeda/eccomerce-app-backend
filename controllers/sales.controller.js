@@ -219,13 +219,10 @@ const clearSale = async (req = request, res = response) => {
             });
         }
 
-        if (userDB.cart.length === 0) {
-            return res.status(400).json({
-                msg: `The cart is empty`
-            });
-        }
+        if (userDB.cart.length === 0) return;
 
-        console.log('User cart has been cleaned!')
+        console.log('User cart has been cleaned!', email)
+        console.log(userDB.cart.length)
 
         // Enviamos los productos del carrito a ser puestos en el ranking
         userDB.cart.forEach((e) => updateBestProducts(e));
