@@ -157,8 +157,6 @@ const updateSale = async (req, res = response) => {
 
     try {
 
-    console.log(req.body);
-
         const saleDB = await Sale.findById(id);
 
         if (!saleDB) {
@@ -209,6 +207,7 @@ const updateSale = async (req, res = response) => {
 
 const clearSale = async (req = request, res = response) => {
 
+    console.log(req.body);
 
     const email = req.params.email;
 
