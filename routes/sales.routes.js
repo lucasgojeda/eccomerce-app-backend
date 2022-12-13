@@ -22,7 +22,7 @@ router.get('/:term', [
     validateFields
 ], getSales);
 
-router.post('/clear/:email/:something', [
+router.post('/clear/:email', [
     check('email', 'email is required.').not().isEmpty(),
     validateFields
 ], clearSale);
