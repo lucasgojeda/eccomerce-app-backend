@@ -157,6 +157,8 @@ const updateSale = async (req, res = response) => {
 
     try {
 
+    console.log(req.body);
+
         const saleDB = await Sale.findById(id);
 
         if (!saleDB) {
