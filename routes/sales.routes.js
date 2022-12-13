@@ -2,10 +2,10 @@ const { Router } = require('express');
 
 const { check } = require('express-validator');
 
-const { getSales, 
-        createSale,
-        clearSale,
-        updateSale  } = require('../controllers/sales.controller');
+const { getSales,
+    createSale,
+    clearSale,
+    updateSale } = require('../controllers/sales.controller');
 
 const {
     validateFields,
@@ -16,9 +16,8 @@ const {
 
 const router = Router();
 
-router.use( jwtValidate );
-
 router.get('/:term', [
+    jwtValidate,
     isRole('ADMIN_ROLE', 'MODERATOR_ROLE'),
     validateFields
 ], getSales);
@@ -29,10 +28,12 @@ router.post('/clear/:email/:something', [
 ], clearSale);
 
 router.post('/', [
+    jwtValidate,
     validateFields
 ], createSale);
 
 router.put('/:id', [
+    jwtValidate,
     isRole('ADMIN_ROLE', 'MODERATOR_ROLE'),
     check('id', 'id is required.').not().isEmpty(),
     validateFields
