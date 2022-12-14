@@ -209,8 +209,6 @@ const updateSale = async (req, res = response) => {
 
 const clearSale = async (req = request, res = response) => {
 
-    console.log(req.body);
-
     const email = req.params.email;
 
     try {
@@ -223,9 +221,6 @@ const clearSale = async (req = request, res = response) => {
         }
 
         if (req.body.action !== 'payment.created') return;
-
-        console.log('User cart has been cleaned!', email)
-        console.log(userDB.cart.length)
 
         // Enviamos los productos del carrito a ser puestos en el ranking
         userDB.cart.forEach((e) => updateBestProducts(e));
