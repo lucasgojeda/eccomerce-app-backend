@@ -1,5 +1,5 @@
 const { Schema,
-        model } = require('mongoose');
+    model } = require('mongoose');
 
 const userSchema = Schema({
     name: {
@@ -26,6 +26,28 @@ const userSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Product',
     }],
+    data: {
+        state: {
+            type: String,
+            required: false
+        },
+        city: {
+            type: String,
+            required: false
+        },
+        postalCode: {
+            type: String,
+            required: false
+        },
+        address: {
+            type: String,
+            required: false
+        },
+        numberPhone: {
+            type: String,
+            required: false
+        },
+    },
     status: {
         type: Boolean,
         default: true
@@ -36,9 +58,9 @@ const userSchema = Schema({
     }
 });
 
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
     const { __v, password, ...user } = this.toObject();
     return user;
 }
 
-module.exports = model( 'User', userSchema );
+module.exports = model('User', userSchema);
