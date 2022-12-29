@@ -1,47 +1,50 @@
 # E-commerce backend
-## _Rest API hecha para un ecommerce_
+## _Rest API made for an ecommerce_
 
-Este proyecto es parte del que al principio fue uno mucho más grande pero decidí dividir su frontend en dos partes para que todo quede mucho más ordenado, facil de mantener y de realizar cambios, el proyecto en si es un e-commerce el cuál consta de las siguientes partes:
-- Frontend del usuario, e-commerce en si.
+This project is part of what at the beginning was a much bigger one but I decided to divide its frontend into two parts so that everything is much more orderly, easy to maintain and make changes, the project itself is an e-commerce which consists of the following parts:
+
+- User application (e-commerce itself).
     * React js.
-    * Redux toolkit (acciones mediante custom hooks).
-- Frontend del administrador/moderador.
+    * Redux toolkit (actions by using custom hooks).
+- Admin/moderator application (dashboard).
     * React js.
-    * Redux toolkit (acciones mediante custom hooks).
+    * Redux toolkit (actions by using custom hooks).
 - Backend.
     * Node js - Express.
     * MongoDb - Mongoose.
 
-#### Roles, funcionabilidades y permisos.
+#### Roles, functionalities and permissions.
 
-Existen dos roles posibles en el dashboard **Administrador** y **Moderador**.
-##### **Administrador**
-Este es el rol más importante y el cuál cuenta con las funcionalidades y permisos más relevantes en la aplicación, dichos permisos le sirven para monitorear y controlar las acciones del/los moderador/es.
+There are two possible roles in the dashboard **Administrator** and **Moderator**.
 
-###### Permisos y funcionalidades:
-- Crear, editar y enviar productos a la papelera e incluso eliminarlos.
-- Crear, editar y enviar usuarios a la papelera e incluso eliminarlos.
-    - Cabe destacar que puede asignarle a dichos usuarios su rol.
-        - Usuario.
-        - Moderador.
-        - Administrador.
-- Monitorear desde la sección de registros toda acción relacionada a productos y usuarios realizada por si mismo, otro administrador o por moderadores.
-- Si un producto es eliminado primero será enviado a la papelera y desde ahí solo el administrador puede eliminarlos permanentemente, lo mismo pasa con los usuarios solo que el administrador es el unico capaz de enviarlos a la papelera en el caso de los usuarios.
-- Marcar como enviados los pedidos de los productos por parte de clientes desde la sección de ventas.
-- Puede ver las estadisticas de la cantidad de productos, usuarios, ventas, registros.
+##### **Administrator**
+This is the most important role and the one which has the most relevant functionalities and permissions in the application, these permissions serve to monitor and control the actions of the moderator(s).
 
-##### **Moderador**
-Este rol es más para un ayudante o colaborador en el dashboard, tiene permisos suficientes para realizar actividades colaborativas de suma importancia pero que en la mayoria de sus casos de cometer un error quedará registrado y si elimina algún producto por error, ese error no será permanente.
+###### Functionalities and permissions:
+- Create, edit, send products to the trash and even delete products permanently.
+- Create, edit, send users to the trash and even delete users permanently.
+    - It should be noted that you can assign these users their role.
+        - User.
+        - Moderator.
+        - Admin.
+- Monitor from the records section all actions related to products and users carried out by yourself, another administrator or by moderators.
+- If a product is deleted first it will be sent to the trash and from there only the administrator can delete them permanently, the same happens with the users but in this case only the administrator will be able to send them to the trash.
+- Mark as sent the orders of the products by customers from the sales section.
+- View the statistics of the number of products, users, sales, registrations.
 
-###### Permisos y funcionalidades:
-- Crear, editar y enviar productos a la papelera.
-- Marcar como enviados los pedidos de los productos por parte de clientes desde la sección de ventas.
-- Puede ver solo las estadisticas de la cantidad de productos y de ventas en la pagina de inicio.
-## Instalación
+##### **Moderator**
+This role is more for an assistant or collaborator in the dashboard, he has sufficient permissions to carry out very important collaborative activities, but in most cases if he makes an error it will be recorded and if he deletes a product by mistake, that error will not be permanent.
+
+###### Functionalities and permissions:
+- Create, edit and send products to trash.
+- Mark as sent the orders of the products by customers from the sales section.
+- See only the statistics of the number of products and sales on the home page
+
+## instalación
 
 
 
-Primero instalamos las dependencias y luego iniciamos el servidor local.
+First install the dependencies and then start the local server.
 
 ```sh
 $ git clone https://github.com/lucasgojeda/eccomerce-app-backend.git
@@ -50,18 +53,18 @@ $ npm i
 $ nodemon app
 ```
 
-Cabe destacar que debemos contar con las siguientes variables de entorno configuradas.
+It should be noted that we must have the following environment variables configured.
 
 ```sh
-PORT= (Numero del puerto en el que correrá el servidor localmente)
+PORT= (Port number on which the server will run locally)
 
-MONGODB_CNN= (Url de la base de datos mongoDb)
+MONGODB_CNN= (Mongodb database url)
 
-SECRETORPRIVATEKEY= (Clave de cifrado para los JWT Token)
+SECRETORPRIVATEKEY= (Encryption key for JWT Tokens)
 
-GOOGLE_CLIENT_ID= (Información proporcionada por la API de google)
+GOOGLE_CLIENT_ID= (Information provided by the Google API)
 
-CLOUDINARY_URL= (Información proporcionada por la API de Cloudinary)
+CLOUDINARY_URL= (Information provided by the Cloudinary API)
 
 
 ```
