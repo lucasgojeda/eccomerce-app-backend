@@ -128,7 +128,7 @@ const googleSignInController = async (req, res = response) => {
 
 const tokenRevalidate = async (req, res = response) => {
   try {
-    const { _id, name, role, cart, email } = req.user;
+    const { _id, name, role, cart, email, data } = req.user;
 
     const token = await jwtGenerate(_id);
 
@@ -140,6 +140,7 @@ const tokenRevalidate = async (req, res = response) => {
       _id,
       role,
       cart,
+      data,
     });
   } catch (error) {
     console.log(error);
