@@ -1,4 +1,5 @@
-const sortArray = (array, orderBy, filterBy) => {
+const sortArray = (array, orderBy = "asc", filterBy = "name") => {
+  if (array.length === 0) return [];
   let filteredProducts = [];
 
   // console.log('filterBy: ', filterBy);
